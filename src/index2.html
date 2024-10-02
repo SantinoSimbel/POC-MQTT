@@ -19,8 +19,8 @@
           setInterval(() => {
             const date = new Date(); //creo objeto Date con la fechaHora actual
             const time = date.toTimeString(); //Agarro la hora de la Date y la convierto a string
-
-            client.publish("horaActual", time);  //manda un mensaje al tema hotaActual con el valor de time
+            client.publish('horaActual', time, { qos: 1 }); // QoS 1 para compararlo mejor con websockets
+              //manda un mensaje al tema hotaActual con el valor de time
           }, 5000); //publica cada 5 segundos 
         }
       });
