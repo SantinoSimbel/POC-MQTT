@@ -14,7 +14,7 @@
       console.log("Conectado Exitosamente");
 
       //se suscribe al tema "horaActual" para escucharlo
-      client.subscribe("horaActual", (err) => {
+      client.subscribe("horaActual", { qos: 1 }, (err) => { //indico el qos que espero tambien en la suscripcion.
         if (!err) { //si no hay error
           setInterval(() => {
             const date = new Date(); //creo objeto Date con la fechaHora actual
@@ -41,5 +41,3 @@
 </body>
 
 </html>
-
-<!-- Investigar que son los Quality of service (mqtt tiene 3) y si los podemos implementar. -->
