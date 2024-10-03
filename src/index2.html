@@ -7,30 +7,37 @@
   <title>MQTT Test</title>
   <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
   <script>
-    
-    const client = mqtt.connect('ws://broker.hivemq.com:8000/mqtt'); //se conecta al broker(servidor intermediario que gestiona la transmision de mensajes entre clientes), el ws del principo significa websocket.
+    // pagina web a visitar para hacer el test:
+    // https://www.hivemq.com/demos/websocket-client/?
+    const client = mqtt.connect('wss://mqtt-dashboard.com:8884/mqtt'); //se conecta al broker(servidor intermediario que gestiona la transmision de mensajes entre clientes), el ws del principo significa websocket.
 
     client.on("connect", () => {
       console.log("Conectado Exitosamente");
+      
+      client.publish('welcome', 'Bienvenido a mqtt', { qos: 1 }, (error) => {
+      });
 
-      //se suscribe al tema "horaActual" para escucharlo
-      client.subscribe("horaActual", { qos: 1 }, (err) => { //indico el qos que espero tambien en la suscripcion.
-        if (!err) { //si no hay error
-          setInterval(() => {
-            const date = new Date(); //creo objeto Date con la fechaHora actual
-            const time = date.toTimeString(); //Agarro la hora de la Date y la convierto a string
-            client.publish('horaActual', time, { qos: 1 }); // QoS 1 para compararlo mejor con websockets
-              //manda un mensaje al tema hotaActual con el valor de time
-          }, 5000); //publica cada 5 segundos 
+      client.subscribe('time', { qos: 1 }, (error) => {
+        if (error) {
+            console.log('Error al suscribirse', error);
+        } else {
+            setInterval(() => {
+            let date = new Date(); 
+            let hour = date.getHours();
+            let minutes = date.getMinutes();
+            let seconds = date.getSeconds();
+            hour =  hour < 10 ? "0" + hour : hour;
+            minutes =  minutes < 10 ? "0" + minutes : minutes;
+            seconds =  seconds < 10 ? "0" + seconds : seconds;
+            let time = `${hour}:${minutes}:${seconds}`;
+            //const time = date.toTimeString(); //Agarro la hora de la Date y la convierto a string
+            client.publish('time', time, { qos: 1 }); // QoS 1 para compararlo mejor con websockets
+          }, 5000);
         }
       });
     });
-
-    // Escucha los mensajes que llegan a los temas a los que el cliente está suscrito
     client.on("message", (topic, message) => {
-      // Muestra el mensaje en la página, message es de tipo buffer por eso lo paso a string
       document.getElementById("output").innerText += message.toString() + "\n";
-      //client.end(); si esto esta descomentado se detiene luego de 1 mensaje
     });
   </script>
 </head>
