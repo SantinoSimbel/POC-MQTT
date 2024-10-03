@@ -9,14 +9,11 @@
   <script>
     // pagina web a visitar para hacer el test:
     // https://www.hivemq.com/demos/websocket-client/?
-    const client = mqtt.connect('wss://mqtt-dashboard.com:8884/mqtt'); //se conecta al broker(servidor intermediario que gestiona la transmision de mensajes entre clientes), el ws del principo significa websocket.
+    const client = mqtt.connect('ws://localhost:9001'); //se conecta al broker(servidor intermediario que gestiona la transmision de mensajes entre clientes), el ws del principo significa websocket.
 
     client.on("connect", () => {
-      console.log("Conectado Exitosamente");
+      console.log('Conectado al broker MQTT desde el cliente');
       
-      client.publish('welcome', 'Bienvenido a mqtt', { qos: 1 }, (error) => {
-      });
-
       client.subscribe('time', { qos: 1 }, (error) => {
         if (error) {
             console.log('Error al suscribirse', error);
