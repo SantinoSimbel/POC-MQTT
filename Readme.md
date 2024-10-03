@@ -12,7 +12,7 @@ socket_domain ipv4
 # (Opcional) Configuración adicional
 allow_anonymous true
 
-luego abrir la consola y ejecutar mosquitto -h
+luego abrir la consola y ejecutar mosquitto -h\
 si funciona el comando ejecutar mosquitto -c mosquitto.conf
 sino moverse desde consola hasta la carpeta mosquito y ejecutar esto:
 .\mosquitto.exe -c mosquitto.conf -v
