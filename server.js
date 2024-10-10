@@ -1,26 +1,15 @@
 import Aedes from "aedes";
-import { createServer } from 'net'
-import aedesServerFactory from 'aedes-server-factory';
+import aedesServerFactory from 'aedes-server-factory'; //biblioteca que ayuda a crear server compatible con ws
 
-const aedes = new Aedes(); //Para manejar las conexiones MQTT.
+const aedes = new Aedes(); //Para manejar las conexiones MQTT. Brocker MQQT
 
-//Puerto TCP
-const tcpPort = 1883;
 
 //Puerto WebSocket
 const wsPort = 8888;
 
-//Configuracion de server TPC.
-const tcpServer = createServer(aedes.handle)
+//Configuracion y creacion de server WebSocket.
+const wsServer = aedesServerFactory.createServer(aedes, {ws: true}); 
 
-//Configuracion de server WebSocket.
-const wsServer = aedesServerFactory.createServer(aedes, {ws: true});
-
-
-wsServer.listen(wsPort, () => {
+wsServer.listen(wsPort, () => { //inicializa el server ws
   console.log(`Servidor MQTT sobre WebSockets corriendo en el puerto ${wsPort}`);
 })
-
-tcpServer.listen(tcpPort, () => {
-  console.log(`Servidor MQTT sobre TCP corriendo en puerto ${tcpPort}`);
-});
