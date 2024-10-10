@@ -8,7 +8,7 @@
   <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
   <script>
     
-    const client = mqtt.connect('ws://broker.hivemq.com:8000/mqtt'); //se conecta al broker(servidor intermediario que gestiona la transmision de mensajes entre clientes), el ws del principo significa websocket.
+    const client = mqtt.connect('ws://localhost:8888'); //se conecta al broker(servidor intermediario que gestiona la transmision de mensajes entre clientes), el ws del principo significa websocket.
 
     client.on("connect", () => {
       console.log("Conectado Exitosamente");
@@ -37,7 +37,7 @@
 
 <body>
   <h1>MQTT Test</h1>
-  <pre id="output"></pre> <!-- Sección para mostrar mensajes recibidos -->
+  <pre style="font-size: 18px;" id="output"></pre> <!-- Sección para mostrar mensajes recibidos -->
 </body>
 
 </html>
