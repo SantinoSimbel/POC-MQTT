@@ -9,7 +9,6 @@
   <script>
     
     const client = mqtt.connect('ws://localhost:8888'); //se conecta al broker(servidor intermediario que gestiona la transmision de mensajes entre clientes), el ws del principo significa websocket.
-
     client.on("connect", () => {
       console.log("Conectado Exitosamente");
 
